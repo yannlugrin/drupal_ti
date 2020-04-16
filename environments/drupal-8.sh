@@ -44,7 +44,7 @@ function drupal_ti_ensure_module_linked() {
   # the local repository must be the first in the list.
 	composer config repositories.0 path $TRAVIS_BUILD_DIR
 	composer config repositories.1 composer https://packages.drupal.org/8
-	composer require drupal/$DRUPAL_TI_MODULE_NAME *@dev
+	composer require $DRUPAL_TI_MODULE_NAMESPACE/$DRUPAL_TI_MODULE_NAME *@dev
 }
 
 if [ -z "$DRUPAL_TI_DRUSH_VERSION" ]
@@ -82,4 +82,10 @@ export SIMPLETEST_BASE_URL="$DRUPAL_TI_WEBSERVER_URL:$DRUPAL_TI_WEBSERVER_PORT"
 if [ -z "$DRUPAL_TI_INSTALL_PROFILE" ]
 then
 	export DRUPAL_TI_INSTALL_PROFILE="minimal"
+fi
+
+# Use durpal module namespace by default.
+if [ -z "$DRUPAL_TI_MODULE_NAMESPACE" ]
+then
+	export DRUPAL_TI_MODULE_NAMESPACE="drupal"
 fi
